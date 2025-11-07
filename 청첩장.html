@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>[신랑 이름] ♥ [신부 이름] 결혼합니다</title>
+
+    <link rel.preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* -------------------
+         * 기본 설정
+         * ------------------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nanum Gothic', '나눔고딕', sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background-color: #f7f7f7; /* 바깥쪽 배경색 */
+        }
+
+        /* -------------------
+         * 메인 컨테이너 (모바일 폭 고정)
+         * ------------------- */
+        .container {
+            max-width: 600px; /* 모바일 청첩장의 최대 가로 폭 */
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            overflow-x: hidden;
+        }
+
+        section {
+            padding: 3em 1.5em; /* 각 섹션의 상하, 좌우 여백 */
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        /* -------------------
+         * 공통 요소 (제목, 버튼 등)
+         * ------------------- */
+        h2 {
+            font-family: 'Nanum Myeongjo', '나눔명조', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 1.5em;
+            letter-spacing: 1px;
+        }
+
+        p {
+            margin-bottom: 1em;
+            font-size: 1em;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #a08c7a; /* 고급스러운 버튼 색 */
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 700;
+            margin-top: 1em;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #8c7a6b;
+        }
+
+        /* -------------------
+         * 1. 메인 이미지 (Hero)
+         * ------------------- */
+        .hero {
+            padding: 0; /* 여백 없음 */
+        }
+        .hero img {
+            width: 100%;
+            display: block;
+        }
+        .hero-info {
+            padding: 2em 1.5em;
+            background-color: #fafafa;
+        }
+        .hero-info h1 {
+            font-family: 'Nanum Myeongjo', '나눔명조', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 0.5em;
+        }
+        .hero-info .date {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #a08c7a;
+        }
+
+
+        /* -------------------
+         * 2. 인사말 (Intro)
+         * ------------------- */
+        .intro .greeting {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #555;
+            white-space: pre-wrap; /* 줄바꿈(\n)을 인식하게 함 */
+        }
+        .intro .parents {
+            margin-top: 2.5em;
+            padding-top: 2em;
+            border-top: 1px solid #eee;
+        }
+        .intro .parents .name {
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+        .intro .parents .relation {
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        /* -------------------
+         * 3. 오시는 길 (Location)
+         * ------------------- */
+        .location .place-name {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 0.5em;
+        }
+        .location .address {
+            font-size: 1em;
+            color: #555;
+            margin-bottom: 1.5em;
+        }
+        .map-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 75%; /* 4:3 비율 */
+            height: 0;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* -------------------
+         * 4. 갤러리 (Gallery)
+         * ------------------- */
+        .gallery {
+            background-color: #fafafa;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3열 그리드 */
+            gap: 8px; /* 사진 사이의 간격 */
+        }
+        .gallery-grid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 이미지가 잘리지 않고 꽉 차도록 */
+            aspect-ratio: 1 / 1; /* 1:1 정사각형 비율 */
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .gallery-grid img:hover {
+            transform: scale(1.05);
+        }
+
+        /* -------------------
+         * 5. 참석 여부 (RSVP)
+         * ------------------- */
+        .rsvp p {
+            margin-bottom: 1.5em;
+        }
+
+        /* -------------------
+         * 6. 마음 전하실 곳 (Account)
+         * ------------------- */
+        .account details {
+            margin-bottom: 1em;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .account summary {
+            padding: 1em 1.5em;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            outline: none;
+        }
+        .account .account-info {
+            padding: 1.5em;
+            border-top: 1px solid #eee;
+            text-align: left;
+            line-height: 2;
+        }
+
+        /* -------------------
+         * 7. 꼬리말 (Footer)
+         * ------------------- */
+        footer {
+            padding: 2em 1.5em;
+            text-align: center;
+            font-size: 0.9em;
+            color: #aaa;
+            background-color: #333;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <section class="hero">
+            <img src="Designer-2.jpg" alt="웨딩 메인 이미지">
+
+            <div class="hero-info">
+                <h1>[신랑 이름] & [신부 이름]</h1>
+                <p class="date">[2025년 12월 30일 (토) 오후 12시]</p>
+            </div>
+        </section>
+
+        <section class="intro">
+            <h2>초대합니다</h2>
+
+            <p class="greeting">
+[두 사람이 사랑으로 만나
+평생을 함께하는 약속을 하려 합니다.
+늘 따뜻한 관심과 응원 보내주신
+소중한 분들을 모시고자 하오니,
+부디 참석하시어
+저희의 첫걸음을 축복해 주시면
+더없는 기쁨으로 간직하겠습니다.]
+            </p>
+
+            <div class="parents">
+                <p>
+                    <span class="name">[신랑 혼주 아버님 성함]</span> · <span class="name">[신랑 혼주 어머님 성함]</span>
+                    <span class="relation">의 아들</span>
+                    <span class="name">[신랑 이름]</span>
+                </p>
+                <br>
+                <p>
+                    <span class="name">[신부 혼주 아버님 성함]</span> · <span class="name">[신부 혼주 어머님 성함]</span>
+                    <span class="relation">의 딸</span>
+                    <span class="name">[신부 이름]</span>
+                </p>
+            </div>
+        </section>
+
+        <section class="location">
+            <h2>오시는 길</h2>
+            <p class="place-name">[OOO 웨딩홀 O층 OOO홀]</p>
+            <p class="address">[서울시 강남구 테헤란로 123 (상세주소)]</p>
+
+            <div class="map-container">
+                <iframe
+                    src="[여기에 구글 지도 iframe 코드를 붙여넣으세요]"
+                    width="600"
+                    height="450"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+
+            <a href="[네이버/카카오맵 링크]" class="btn" target="_blank">지도 앱으로 길찾기</a>
+        </section>
+
+        <section class="gallery">
+            <h2>우리의 사진</h2>
+            <div class="gallery-grid">
+                <img src="https://via.placeholder.com/300x300/E8E8E8/BDBDBD?text=Photo+1" alt="웨딩 사진 1">
+                <img src="https://via.placeholder.com/300x300/E8E8E8/BDBDBD?text=Photo+2" alt="웨딩 사진 2">
+                <img src="https://via.placeholder.com/300x300/E8E8E8/BDBDBD?text=Photo+3" alt="웨딩 사진 3">
+                <img src="https://via.placeholder.com/300x300/E8E8E8/BDBDBD?text=Photo+4" alt="웨딩 사진 4">
+                <img src="https://via.placeholder.com/300x300/E8E8E8/BDBDBD?text=Photo+5" alt="웨딩 사진 5">
+                <img src="https://via.placeholder.com/300x300/E8E8E8/BDBDBD?text=Photo+6" alt="웨딩 사진 6">
+            </div>
+        </section>
+
+        <section class="rsvp">
+            <h2>참석 여부</h2>
+            <p>참석 의사를 미리 알려주시면 큰 도움이 됩니다.</p>
+            <a href="[여기에 구글 폼 링크를 넣으세요]" class="btn" target="_blank">참석 의사 전달하기</a>
+        </section>
+
+        <section class="account">
+            <h2>마음 전하실 곳</h2>
+
+            <details>
+                <summary>신랑측 계좌번호 보기</summary>
+                <div class="account-info">
+                    <strong>[신랑] [은행]</strong><br>
+                    [123-456-789012] [신랑 이름]<br>
+                    <br>
+                    <strong>[신랑 혼주] [은행]</strong><br>
+                    [123-456-789012] [신랑 혼주 성함]
+                </div>
+            </details>
+
+            <details>
+                <summary>신부측 계좌번호 보기</summary>
+                <div class="account-info">
+                    <strong>[신부] [은행]</strong><br>
+                    [123-456-789012] [신부 이름]<br>
+                    <br>
+                    <strong>[신부 혼주] [은행]</strong><br>
+                    [123-456-789012] [신부 혼주 성함]
+                </div>
+            </details>
+        </section>
+
+    </div>
+    <footer>
+        <p>Made by [신랑] & [신부]</p>
+    </footer>
+
+</body>
+</html>
